@@ -1,2 +1,12 @@
+import Test.Tasty
+
+import Test.Coding
+
 main :: IO ()
-main = putStrLn "Test suite not yet implemented"
+main = defaultMain globalTests
+
+globalTests :: TestTree
+globalTests = testGroup "Global"
+    [
+        codingTests
+    ]
