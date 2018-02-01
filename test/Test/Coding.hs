@@ -13,5 +13,8 @@ codingTests = testGroup "Coding Tests"
         testProperty "decode1 . encode1 == id" $ forAll positivePairs (\p -> (decode1 . encode1) p == p),
 
         testProperty "encode0 . decode0 == id" $ forAll naturals (\n -> (encode0 . decode0) n == n),
-        testProperty "decode0 . encode0 == id" $ forAll naturalPairs (\p -> (decode0 . encode0) p == p)
+        testProperty "decode0 . encode0 == id" $ forAll naturalPairs (\p -> (decode0 . encode0) p == p),
+
+        testProperty "decodeList . encodeList == id" $ forAll naturalLists (\p -> (decodeList . encodeList) p == p),
+        testProperty "encodeList . decodeList == id" $ forAll naturals (\p -> (encodeList . decodeList) p == p)
     ]

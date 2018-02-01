@@ -1,6 +1,7 @@
 module Coding where
 
 import Numeric.Natural
+import Data.List (unfoldr)
 
 -- <<x,y>> -> 2^x(2y+1)
 encode1 :: (Natural, Natural) -> Natural
@@ -12,10 +13,16 @@ encode0 p = encode1 p - 1
 
 -- 
 decode1 :: Natural -> (Natural, Natural)
-decode1 0 = error "decode1 not defined for input 0"
-decode1 z = (x, y)
+decode1 x = case maybeDecode1 x of
+        Nothing -> error "decode1 not defined for input 0"
+        Just p  -> p
+
+maybeDecode1 :: Natural -> Maybe (Natural, Natural)
+maybeDecode1 0 = Nothing
+maybeDecode1 z = Just (x, y)
     where (x, p) = greatestDiv z
           y = (z `div` p) `div` 2
+
 
 decode0 :: Natural -> (Natural, Natural)
 decode0 x = decode1 (x + 1)
@@ -23,3 +30,10 @@ decode0 x = decode1 (x + 1)
 -- Return the greatest power of 2 which divides the number
 greatestDiv :: Natural -> (Natural, Natural)
 greatestDiv x = last $ zip [0..] $ takeWhile (\d -> x `mod` d == 0) $ iterate (*2) 1
+
+
+encodeList :: [Natural] -> Natural
+encodeList = foldr (curry encode1) 0
+
+decodeList :: Natural -> [Natural]
+decodeList = unfoldr (maybeDecode1)
