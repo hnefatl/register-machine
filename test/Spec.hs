@@ -1,6 +1,8 @@
 import Test.Tasty
 
-import Test.Coding
+import Test.Pure
+import Test.List
+import Test.Program
 
 main :: IO ()
 main = defaultMain globalTests
@@ -8,5 +10,7 @@ main = defaultMain globalTests
 globalTests :: TestTree
 globalTests = testGroup "Global"
     [
-        codingTests
+        pureTests,
+        listTests,
+        programTests
     ]
